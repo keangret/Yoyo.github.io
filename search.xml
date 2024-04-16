@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Linux入门</title>
+      <link href="/2024/04/16/Linux/"/>
+      <url>/2024/04/16/Linux/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-vi-vim编辑器"><a href="#1-vi-vim编辑器" class="headerlink" title="1.vi/vim编辑器"></a>1.vi/vim编辑器</h1><p>vi编辑器是Unix系统下的一款文本编辑器，而vim是vi improved的缩写，是vi编辑器的增强版，它们的使用方法是一样的，只是vim在vi的基础上，增加了一些新的功能和改进，使用起来更加地方便。在命令行中输入vi通常也会启动vim。<br>vi中有三种常用的模式，分别是<strong>命令模式（command mode）</strong>，<strong>插入模式(insert mode)</strong>，<strong>尾行模式(last line mode)</strong>,他们的关系及其快捷键如下图：<br><img src="https://pic-bed-1lf.pages.dev/imgmd/modes.png" alt="三种模式" title="三种模式"><br>进入到vim之后默认的是命令模式，在命令模式输入：进入尾行模式，在输入q退出vim编辑器。vim命令后可以加文件名，回车进入该文件，若没有该文件，则会创建新的文件进入。<br>示例命令如下：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hello.txt</span><br></pre></td></tr></table></figure><br>运行结果如下<br><img src="https://pic-bed-1lf.pages.dev/imgmd/openfile.png" alt="进入文件" title="进入文件"><br>命令模式进入插入模式的快捷键作用有些许不同。小写的i键和a键分别表示在光标的前面或者后面插入内容，大写的I键和O键表示在当前行的行首或者行尾来插入内容。小写o键表示在当前行的下一行插入内容，大写的O键在当前行的上一行插入内容。<br>编写完成后再尾行模式下输入以下命令保存退出文件<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wq</span><br></pre></td></tr></table></figure><br>输入以下命令查看当前目录文件和文件夹<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure><br>使用cat命令查看文件内容，内容将出现在终端。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat hello.txt</span><br></pre></td></tr></table></figure><br>使用vi命令进入文件后，可以使用<strong>hjkl</strong>这几个键控制光标的移动代表← ↓ ↑ → 。同时键盘的←，↓，↑，→也具有同样的功能。同时^键和$键分别表示光标跳转到这一行行首和行尾，当这一行的内容很长时，这两个快捷键很方便的。<br>在命令模式下，我们也可以用快捷键来执行复制、粘贴、删除等操作。连续按下两个y键来复制一行内容，在按下p键将复制的内容粘贴到下一行，每按下一次p键就会粘贴一次。连续按下两个d删除一行内容，同样可以使用p键将删除的内容粘贴到光标所在的下一行。与windows相比，可以说<strong>yy</strong>与<strong>ctrl+v</strong>,<strong>p</strong>与<strong>ctrl+v</strong>,<strong>dd</strong>与<strong>ctrl+x</strong>相同。还有一个小技巧，在快捷键前面加上一个数字，表示复制或者粘贴的次数，比如输入2yy就会复制两行内容，在输入一个3p,就会把刚刚复制的两行内容在下面粘贴三次。<br>vi内复制命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yy</span><br><span class="line">//复制n行</span><br><span class="line">nyy</span><br></pre></td></tr></table></figure><br>vi内粘贴命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p</span><br><span class="line">//粘贴n次</span><br><span class="line">np</span><br></pre></td></tr></table></figure><br>vi内删除命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd</span><br></pre></td></tr></table></figure><br>在尾行模式下输入<strong>set number</strong>或者其缩写<strong>set nu</strong>可以查看文件行号。如果不需要行号，就在尾行模式输入<strong>set nonumber</strong>关闭行号显示。<br>如果文件太长，慢慢向下翻，效率太慢。在这种情况下，我们可以使用<strong>ctrl+f</strong>和<strong>ctrl+b</strong>来快速地向前翻页或者向后翻页。或者使用<strong>ctrl+u</strong>和<strong>ctrl+d</strong>快速向下翻半页和向上翻半页。我们还可以使用大写的G跳转到文件最后一行，小写的gg跳转到文件的第一行。如果要跳转到文件中指定的某一行，就输入行号再按下大写字母G，比如输入100G跳转到100行。也可以输入一个冒号，再加上行号，比如：50回车跳转到第50行，也是一样的效果。<br>尾行模式下设置行号<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set number</span><br><span class="line">//取消行号</span><br><span class="line">set nonumber</span><br></pre></td></tr></table></figure><br>在vi中查找和替换也是非常常用的，我们可以使用斜线或者问号进行查找。在命令模式下输入一个<strong>斜线（/）</strong>，后面加上要找的内容，就会从光标所在的位置开始向下查找，向上查找就是用<strong>问号（？）</strong>。当我们找到目标后，如果需要查找下一个，就可以输入一个小写的<strong>n</strong>键。如果需要反向查找下一个，就输入大写的<strong>N</strong>键。查找是区分大小写的，如果需要不区分大小写，就需再次基础上输入\c，就不会区分大小写。或者在尾行模式下输入<strong>set ic(ignore case)</strong>同样达到效果。vi的替换需要输入命令:n1,n2s/old/new/g，其中，n1和n2表示范围，如果只是替换当前行只需忽略这两个数字，s表示替换的意思，old表示要替换的内容，new表示替换后的内容，g表示全局，如果不加g只会替换每一行的第一个匹配到的内容，加上g之后就会替换每一行的所有匹配到的内容。<br>vi内尾行模式查找命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//n向下找，N反之</span><br><span class="line">/内容</span><br><span class="line">//n向上找，N反之</span><br><span class="line">?内容</span><br></pre></td></tr></table></figure><br>vi内尾行模式替换命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//n1和n2表示范围，s为替换,g为全局，也就是设置这行所有匹配的内容，否则就替换第一个匹配内容，old需要替换的内容，new替换后的内容</span><br><span class="line">n1,n2s/old/new/g</span><br></pre></td></tr></table></figure><br>vi的撤销快捷键是u,与windows的ctrl+z一样。<br>在vi还有一个非常重要的文件.vimrc,这个文件可以保存vi的配置信息，我们可以设置一些快捷键或者插件等。这样以后打开vi就不需要每次手动设置了。</p><h1 id="2-常用命令"><a href="#2-常用命令" class="headerlink" title="2.常用命令"></a>2.常用命令</h1><h2 id="1-ls命令"><a href="#1-ls命令" class="headerlink" title="1.ls命令"></a>1.ls命令</h2><p>ls(list)显示目录内容,查看当前目录下所有文件和文件夹。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure><br>若需要查看更详细信息，可以输入命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure><br>若需要查看隐藏文件在内的所有文件和目录，可以输入命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure><br>当然还有其他参数,-h可以以人类可读的方式显示文件的大小，-t可以安装修改时间排序，-r可以逆序显示等等，命令后面的参数可以组合使用。比如命令如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls -h -t -r -l</span><br><span class="line">//以下也行</span><br><span class="line">ls -htrl</span><br></pre></td></tr></table></figure><br>运行图如下<br><img src="https://pic-bed-1lf.pages.dev/imgmd/commandls.png" alt="ls命令" title="ls命令"></p><h2 id="2-ln命令"><a href="#2-ln命令" class="headerlink" title="2.ln命令"></a>2.ln命令</h2><p>观察上面的图，左边一列是文件的类型和权限，第一个字符表示文件的类型，中杠（-）表示普通文件，d表示目录，l表示链接文件。其中链接文件是linux系统中的特殊文件，它分为硬链接和软链接两种。软链接也叫符号链接，它类似于Windows系统中的快捷方式，文件名左边表示的是链接文件本身，右边用箭头指向的方式表示了它所指向的文件或者目录。创建链接文件的命令如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//ln(link)创建链接文件</span><br><span class="line">ln -s hello.txt link.txt</span><br></pre></td></tr></table></figure><br>-s参数表示创建的是软链接文件，如果不加，默认硬链接文件。<br>运行图如下<br><img src="https://pic-bed-1lf.pages.dev/imgmd/commandln.png" alt="ln命令" title="ln命令"><br>使用cat命令查看，他们的内容是一样的。软链接文件本身不存储文件内容，它只是一个指向目标文件的快捷方式。所有软链接文件大小非常小。<br>不加-s是硬链接，其本质是一个指向文件系统中另一个文件的指针，它与原始文件共享相同的i节点。<br>i节点详细如下图<br><img src="https://pic-bed-1lf.pages.dev/imgmd/inode.png" alt="i节点" title="i节点"><br>i节点是文件系统中一个非常重要的概念，在linux系统中，每个文件或者目录都有唯一一个i节点，它存储了文件的元数据信息，包括文件权限，所有者，大小，修改时间等，系统用过这个i节点识别文件的。硬链接文件和原始文件共享相同的i节点，也就意味着他们共享相同的文件内容。源文件和硬链接是文件系统中同一个文件的不同名字。<br>当我们删除其中一个文件时，另一个文件还是可以正常访问的。当我们把软链接的目标文件删除时，软链接文件就会失效。软链接和硬链接的另外一个区别是，软链接可以指向文件或者目录，但是硬链接只能指向文件，不能指向目录。</p><h2 id="3-chmod命令"><a href="#3-chmod命令" class="headerlink" title="3.chmod命令"></a>3.chmod命令</h2><p>左边9个字符表示权限。图解如下<br><img src="https://pic-bed-1lf.pages.dev/imgmd/authority.png" alt="权限图解" title="权限图解"><br>相应的位置上没有权限，就会显示一个中杠（-）<br>我们可以使用change mode命令修改文件的权限，+为添加权限，-为删除权限，比如添加一个可执行权限<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x hello1.txt</span><br></pre></td></tr></table></figure><br>运行图如下<br><img src="https://pic-bed-1lf.pages.dev/imgmd/commandchmod.png" alt="添加执行权限" title="添加执行权限"><br>除了使用加号或者减号添加权限，还可以在加号和减号前面加上u、g或者o，来单独给文件所有者，同组或者其他用户添加或者删除权限。当然ugo可以组合使用。<br>还有其他更简单的方式修改权限，文件的权限由9个字符组成，每一组三个字符表示读、写和执行权限，我们可以把这三个字符分别用一个数字来表示，r表示4，w表示2，x表示1，再把他们加起来就可以得到这个组的权限数字。比如将下图的默认权限可以转换成644，6表示文件所有者同时具有读和写的权限，后面两个4表示同组或者其他用户只有读的权限。<br><img src="https://pic-bed-1lf.pages.dev/imgmd/chmod1.png" alt="权限数字解读" title="权限数字解读"><br>用数字修改权限命令如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//所有用户都基于读写执行权限</span><br><span class="line">chmod 777 hello1.txt</span><br></pre></td></tr></table></figure><br>运行图如下<br><img src="https://pic-bed-1lf.pages.dev/imgmd/commandchmod2.png" alt="数字权限运行图" title="数字权限运行图"></p><h2 id="4-touch命令和echo命令"><a href="#4-touch命令和echo命令" class="headerlink" title="4.touch命令和echo命令"></a>4.touch命令和echo命令</h2><p>创建文件有多种方式，除了可以用vi编辑器创建，还可以用touch创建，这个命令本身的作用是用来更新文件的修改时间的，如果文件不存在，就会创建一个新的空文件。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch hello.txt</span><br></pre></td></tr></table></figure><br>除了touch命令，还可以用echo命令。echo是一个输出文本的命令，例如以下命令<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;hello&quot;</span><br></pre></td></tr></table></figure><br>就可以再命令行中回显出我们输入的内容。<br>如果想把命令保存在一个文件的话，使用重定向符号（&gt;），后面加上文件名，将内容重定向到文件里。当文件不存在时，他就会自动创建一个文件。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;hello&quot; hello.txt</span><br></pre></td></tr></table></figure></p><h2 id="5-pwd命令和cd命令"><a href="#5-pwd命令和cd命令" class="headerlink" title="5.pwd命令和cd命令"></a>5.pwd命令和cd命令</h2><p>在window系统中，文件和目录是以盘符开始的，比如c盘d盘等，而在linux系统中，文件结构是一种树状结构，所有的文件都是从根目录开始的，根目录的符号是一个斜线（/），我们可以执行一个pwd命令，他的作用是显示当前所在目录的位置。也可以使用cd命令切换目录<br>pwd命令的使用<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure><br>cd命令的使用<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//回到根目录下面</span><br><span class="line">cd /</span><br></pre></td></tr></table></figure></p><h2 id="6-cp命令"><a href="#6-cp命令" class="headerlink" title="6.cp命令"></a>6.cp命令</h2><p>复制命令是cp，用法是cp加上要复制的文件和复制后的文件名<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//将file2文件复制一份</span><br><span class="line">cp file2.txt file3.txt</span><br></pre></td></tr></table></figure></p><h2 id="7-mv命令"><a href="#7-mv命令" class="headerlink" title="7.mv命令"></a>7.mv命令</h2><p>mv命令可以移动文件或者重命名文件<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//把file3重命名为file4</span><br><span class="line">mv file3.txt file4.txt</span><br></pre></td></tr></table></figure></p><h2 id="8-删除命令"><a href="#8-删除命令" class="headerlink" title="8.删除命令"></a>8.删除命令</h2><p>rm删除文件<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//删除file4</span><br><span class="line">rm file4.txt</span><br></pre></td></tr></table></figure></p><h2 id="9-mkdir命令"><a href="#9-mkdir命令" class="headerlink" title="9.mkdir命令"></a>9.mkdir命令</h2><p>mkdir创建目录<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//创建一个folder目录</span><br><span class="line">mkdir folder</span><br></pre></td></tr></table></figure><br>-p参数可以创建多级目录<br>比如<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//创建多级目录</span><br><span class="line">mkdir -p folder1/folder2/folder3</span><br></pre></td></tr></table></figure></p><h2 id="10-du命令和tree命令"><a href="#10-du命令和tree命令" class="headerlink" title="10.du命令和tree命令"></a>10.du命令和tree命令</h2><p>du命令查看文件或者目录的结构和大小<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du</span><br></pre></td></tr></table></figure><br>专门显示目录结构的tree命令，以树状图的形式显示目录的结构，他不是linux自带的命令，需要使用包管理器安装。</p><h2 id="11-rmdir命令"><a href="#11-rmdir命令" class="headerlink" title="11.rmdir命令"></a>11.rmdir命令</h2><p>rmdir命令删除目录，如果目录下没有文件，就会直接删除，否则报错。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmdir folder</span><br></pre></td></tr></table></figure></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 标签6 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker入门</title>
       <link href="/2024/04/15/Docker/"/>
       <url>/2024/04/15/Docker/</url>
@@ -29,31 +54,6 @@
     
     
     <entry>
-      <title>第一篇文章</title>
-      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-      
-        <content type="html"><![CDATA[<h2 id="这是我的第一篇文章"><a href="#这是我的第一篇文章" class="headerlink" title="这是我的第一篇文章"></a>这是我的第一篇文章</h2><div class="note default simple"><p>内容…….</p></div><div class="timeline blue"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>时间轴样式</p></div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-07-24 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases">2.6.6 -&gt; 3.0</a></p></div></div><div class='timeline-item-content'><ol><li>如果有 <code>hexo-lazyload-image</code> 插件，需要删除并重新安装最新版本，设置 <code>lazyload.isSPA: true</code>。</li><li>2.x 版本的 css 和 js 不适用于 3.x 版本，如果使用了 <code>use_cdn: true</code> 则需要删除。</li><li>2.x 版本的 fancybox 标签在 3.x 版本中被重命名为 gallery 。</li><li>2.x 版本的置顶 <code>top: true</code> 改为了 <code>pin: true</code>，并且同样适用于 <code>layout: page</code> 的页面。</li><li>如果使用了 <code>hexo-offline</code> 插件，建议卸载，3.0 版本默认开启了 pjax 服务。</li></ol></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-05-15 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases/tag/2.6.6">2.6.3 -&gt; 2.6.6</a></p></div></div><div class='timeline-item-content'><p>不需要额外处理。</p></div></div></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> Hexo </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 标签1 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>第三篇文章</title>
       <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%89%E7%AF%87%E6%96%87%E7%AB%A0/"/>
       <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%89%E7%AF%87%E6%96%87%E7%AB%A0/</url>
@@ -71,31 +71,6 @@
         <tags>
             
             <tag> 标签3 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>第二篇文章</title>
-      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-      
-        <content type="html"><![CDATA[<h2 id="这是我的第二篇文章"><a href="#这是我的第二篇文章" class="headerlink" title="这是我的第二篇文章"></a>这是我的第二篇文章</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> c++ </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 标签2 </tag>
             
         </tags>
       
@@ -171,6 +146,56 @@
         <tags>
             
             <tag> 标签4 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第一篇文章</title>
+      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="这是我的第一篇文章"><a href="#这是我的第一篇文章" class="headerlink" title="这是我的第一篇文章"></a>这是我的第一篇文章</h2><div class="note default simple"><p>内容…….</p></div><div class="timeline blue"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>时间轴样式</p></div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-07-24 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases">2.6.6 -&gt; 3.0</a></p></div></div><div class='timeline-item-content'><ol><li>如果有 <code>hexo-lazyload-image</code> 插件，需要删除并重新安装最新版本，设置 <code>lazyload.isSPA: true</code>。</li><li>2.x 版本的 css 和 js 不适用于 3.x 版本，如果使用了 <code>use_cdn: true</code> 则需要删除。</li><li>2.x 版本的 fancybox 标签在 3.x 版本中被重命名为 gallery 。</li><li>2.x 版本的置顶 <code>top: true</code> 改为了 <code>pin: true</code>，并且同样适用于 <code>layout: page</code> 的页面。</li><li>如果使用了 <code>hexo-offline</code> 插件，建议卸载，3.0 版本默认开启了 pjax 服务。</li></ol></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-05-15 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases/tag/2.6.6">2.6.3 -&gt; 2.6.6</a></p></div></div><div class='timeline-item-content'><p>不需要额外处理。</p></div></div></div>]]></content>
+      
+      
+      <categories>
+          
+          <category> Hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 标签1 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第二篇文章</title>
+      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="这是我的第二篇文章"><a href="#这是我的第二篇文章" class="headerlink" title="这是我的第二篇文章"></a>这是我的第二篇文章</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> c++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 标签2 </tag>
             
         </tags>
       
