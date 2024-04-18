@@ -4,6 +4,81 @@
   
     
     <entry>
+      <title>有序数组的平方</title>
+      <link href="/2024/04/19/%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9/"/>
+      <url>/2024/04/19/%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-要求"><a href="#1-要求" class="headerlink" title="1.要求"></a>1.要求</h1><p>给你一个按 <strong>非递减顺序</strong> 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按<strong>非递减顺序</strong>排序。</p><h1 id="2-暴力排序"><a href="#2-暴力排序" class="headerlink" title="2.暴力排序"></a>2.暴力排序</h1><p>代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; sortedSquares_violent_solutions(vector&lt;int&gt;&amp; nums)</span><br><span class="line">&#123;</span><br><span class="line">for (int i = 0; i &lt; nums.size(); i++)</span><br><span class="line">&#123;</span><br><span class="line">nums[i] = nums[i] * nums[i];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">sort(nums.begin(), nums.end());//快速排序</span><br><span class="line">return nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这个时间复杂度是 O(n + nlogn)， 可以说是O(nlogn)的时间复杂度，但为了和下面双指针法算法时间复杂度有鲜明对比，我记为 O(n + nlog n)。</p><h1 id="3-双指针法"><a href="#3-双指针法" class="headerlink" title="3.双指针法"></a>3.双指针法</h1><p>由于数组有序，那么平方的最大值在数组的两端，不是左边就是右边，不可能是中间。这是可以用双指针发，i指向其实位置，j指向终止位置。先定义一个result数组，与Nums数组一样大小，让k指向result数组终止位置。<br>这里为什么要用i&lt;=j呢，如果没有=，那么i=j时，循环直接退出，这样的话新数组无法更新i=j时的数据，就把这个元素拉下了。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; nums5 = &#123; -5,-3,0,2,5,6 &#125;;</span><br><span class="line">vector&lt;int&gt; sortedSquares(vector&lt;int&gt;&amp; nums)</span><br><span class="line">&#123;</span><br><span class="line">int k = nums.size()-1;</span><br><span class="line">vector&lt;int&gt; result(nums.size(), 0);</span><br><span class="line">for (int i = 0, j = nums.size() - 1; i &lt;= j;)</span><br><span class="line">&#123;</span><br><span class="line">if (nums[i] * nums[i] &lt; nums[j] * nums[j])</span><br><span class="line">&#123;</span><br><span class="line">result[k--] = nums[j] * nums[j];</span><br><span class="line">j--;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">result[k--] = nums[i] * nums[i];</span><br><span class="line">i++;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return result;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><br>此时的时间复杂度为O(n)，相对于暴力排序的解法O(n + nlog n)还是提升不少的。</p><h1 id="4-运行结果"><a href="#4-运行结果" class="headerlink" title="4.运行结果"></a>4.运行结果</h1><p>测试代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; nums6 = &#123; -5,-3,0,2,5,6 &#125;;</span><br><span class="line">void loop_traversal(vector&lt;int&gt; nums)</span><br><span class="line">&#123;</span><br><span class="line">auto pd = nums.begin();</span><br><span class="line">for (pd; pd != nums.end(); pd++)</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; *pd &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">void ordered_array_sorting_test()</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; &quot;双指针解法&quot; &lt;&lt; endl;</span><br><span class="line">auto result=sortedSquares_duel_points(nums5);</span><br><span class="line">loop_traversal(result);</span><br><span class="line">cout &lt;&lt; &quot;暴力解法&quot; &lt;&lt; endl;</span><br><span class="line">auto result2 = sortedSquares_violent_solutions(nums6);</span><br><span class="line">loop_traversal(result2);</span><br><span class="line">cout &lt;&lt; &quot;nums6&quot; &lt;&lt; endl;</span><br><span class="line">loop_traversal(nums6);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>运行结果<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">双指针解法</span><br><span class="line">0</span><br><span class="line">4</span><br><span class="line">9</span><br><span class="line">25</span><br><span class="line">25</span><br><span class="line">36</span><br><span class="line">暴力解法</span><br><span class="line">0</span><br><span class="line">4</span><br><span class="line">9</span><br><span class="line">25</span><br><span class="line">25</span><br><span class="line">36</span><br><span class="line">nums6</span><br><span class="line">0</span><br><span class="line">4</span><br><span class="line">9</span><br><span class="line">25</span><br><span class="line">25</span><br><span class="line">36</span><br><span class="line">请按任意键继续. . .</span><br></pre></td></tr></table></figure></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>二分法</title>
+      <link href="/2024/04/18/%E4%BA%8C%E5%88%86%E6%B3%95/"/>
+      <url>/2024/04/18/%E4%BA%8C%E5%88%86%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-二分法概念"><a href="#1-二分法概念" class="headerlink" title="1.二分法概念"></a>1.二分法概念</h1><p>二分法（Bisection method），是一种一分为二的方法。对区[a,b]上连续不断且满足f(a)*f(b)&lt;0的函数y=f(x)，通过不断地把函数f(x)地零点所在区间的区间二分法，使区间两个端点逐步逼近零点，进而得到零点的近似值的方法。简而言之，就是不断缩小目标的所在区间，直到找到目标。<br>由于每轮可以排除一半的元素，因此最多循环logN次，时间复杂度O(logN)。<br>写二分法需要搞清楚一个区间问题，即在左闭右闭的时候，区间应该怎么处理，左闭右开，这时候又该怎么处理。本文将用c++代码书写该算法</p><h1 id="2-左闭右闭写法"><a href="#2-左闭右闭写法" class="headerlink" title="2.左闭右闭写法"></a>2.左闭右闭写法</h1><p>该c++代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int bisection_left_closed_right_closed(std::vector&lt;int&gt; &amp;nums, int target)</span><br><span class="line">&#123;</span><br><span class="line">int left = 0;</span><br><span class="line">int right = nums.size() - 1;//边界处理1</span><br><span class="line">int middle = 0;</span><br><span class="line">while (left &lt;= right)//边界处理2</span><br><span class="line">&#123;</span><br><span class="line">middle = (left + right) / 2;</span><br><span class="line">if (nums[middle] &gt; target)</span><br><span class="line">&#123;</span><br><span class="line">right = middle - 1;//边界处理3</span><br><span class="line">&#125;</span><br><span class="line">else if (nums[middle] &lt; target)</span><br><span class="line">&#123;</span><br><span class="line">left = middle + 1;//边界处理4</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">return middle;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>1.左闭右闭的边界处理1，为什么用nums.size()-1,而不用nums.size()呢？我们可以这样想nums.size()获取的值是数组的长度，该值比数组最大索引大1，由于是左闭右闭区间，这样就包括比索引大1的值，这是不合法的，所以应该去掉。<br>2.左闭右闭的边界处理2，为什么要用&lt;=,首先我们要看范围是否合法，我们用[1，1]举例，里面只有1这一个元素，若用&lt;，1&lt;1永不成立，根本无法进入循环。<br>3.左闭右闭的边界处理3，为什么要用right=middle-1,而不用middle呢？在该判断条件，我们已判断nums[middle]&lt;target了，这说明middle索引对应的值不为target，不是我们搜索的值，接下来的区间一定不包含这个值，所以right=middle-1。若写right=middle,那么下一个区间包含middle,而middle已确认不是target,放入下一个区间搜索循环，这样做边界处理有问题。<br>4.边界处理4与边界处理3一致，不再赘述。</p><h1 id="3-左闭右开写法"><a href="#3-左闭右开写法" class="headerlink" title="3.左闭右开写法"></a>3.左闭右开写法</h1><p>c++代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int bisection_left_closed_right_opened(std::vector&lt;int&gt; &amp;nums, int target)</span><br><span class="line">&#123;</span><br><span class="line">int left = 0;</span><br><span class="line">int right = nums.size();//边界处理1</span><br><span class="line">int middle = 0;</span><br><span class="line">while (left &lt; right)//边界处理2</span><br><span class="line">&#123;</span><br><span class="line">middle = (left + right) / 2;</span><br><span class="line">if (nums[middle] &gt; target)</span><br><span class="line">&#123;</span><br><span class="line">right = middle;//边界处理3</span><br><span class="line">&#125;</span><br><span class="line">else if (nums[middle] &lt; target)</span><br><span class="line">&#123;</span><br><span class="line">left = middle + 1;//边界处理4</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">return middle;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>1.对于边界处理1，这时为什么能用right=nums.size()呢？因为他是右开的区间，本身不包括右边界的值，故用right=nums.size()。<br>2.对于边界处理2，举个例子[1,1),这表示包括1，又不包括1，若用&lt;=，即1=1，与左闭右开区间相矛盾，故用&lt;。<br>3.对于边界处理3，nums[middle]&gt;target了，下一个搜索区间是不包括middle的，因为他是右开的区间，本身不包括右边界right，故可以用right=middle。<br>4.对于边界处理4，nums[middle]已经不等于target了，下一个搜索区间不包括middle,因为是左闭，所以要middle+1。</p><h1 id="4-算法的结果"><a href="#4-算法的结果" class="headerlink" title="4.算法的结果"></a>4.算法的结果</h1><p>使用如下代码得到结果<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;int&gt; nums = &#123; 10,24,34,45,56,67,78,87,96,100 &#125;;</span><br><span class="line">void bisectiontest()</span><br><span class="line">&#123;</span><br><span class="line">int reason = bisection_left_closed_right_closed(nums, 24);</span><br><span class="line">if (-1 == reason)</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; &quot;没有找到目标值&quot;;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">cout &lt;&lt; &quot;找到值&quot; &lt;&lt; nums[reason] &lt;&lt; &quot;索引为&quot; &lt;&lt; reason &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">int reason1 = bisection_left_closed_right_opened(nums, 33);</span><br><span class="line">if (-1 == reason1)</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; &quot;没有找到目标值&quot;&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; &quot;找到值&quot; &lt;&lt; nums[reason1] &lt;&lt; &quot;索引为&quot; &lt;&lt; reason1 &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>结果如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">找到值24索引为1</span><br><span class="line">没有找到目标值</span><br></pre></td></tr></table></figure></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>数组移除元素</title>
+      <link href="/2024/04/18/%E6%95%B0%E7%BB%84%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/"/>
+      <url>/2024/04/18/%E6%95%B0%E7%BB%84%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-要求"><a href="#1-要求" class="headerlink" title="1.要求"></a>1.要求</h1><p>给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</p><h1 id="2-双指针法"><a href="#2-双指针法" class="headerlink" title="2.双指针法"></a>2.双指针法</h1><p>双指针法（快慢指针法）： 通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。<br>1.快指针：寻找新数组的元素，新数组就是不含有目标元素的数组。<br>2.慢指针：指向更新新数组下标的位置。<br>快慢指针指向同一个地址。快慢指针先一起移动，若快指针找到要删除的值，慢指针停止移动，快指针继续移动，以此岔开快慢指针的位置，进入下一个循环，慢指针就会被快指针赋予下个位置的值，以此达到后续数据往前移动的效果。<br>代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123;</span><br><span class="line">      int slowindex=0;</span><br><span class="line">      for(int fastindex=0;fastindex&lt;nums.size();fastindex++)</span><br><span class="line">      &#123;</span><br><span class="line">        if(val!=nums[fastindex])</span><br><span class="line">        &#123;</span><br><span class="line">             nums[slowindex++]=nums[fastindex];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">      return slowindex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这种算法时间复杂度为O(n),空间复杂度为O(1)。</p><h1 id="3-暴力解法"><a href="#3-暴力解法" class="headerlink" title="3.暴力解法"></a>3.暴力解法</h1><p>用两层for循环一个for循环遍历数组元素 ，第二个for循环更新数组。<br>用i—，是因为，将后面元素覆盖到前面时，这个覆盖前面的元素可能也是要删除的元素，若不i—，则会错过该元素，例如[1,2,2,3],要删除2，下标为2的元素到前面了，此时i=1,若不i—,则i到下一个循环，值为2，而下个要删除的数在下标1那里，已经错过，无法删除。所以要i—。<br>代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int removeElement_Violent_solutions(vector&lt;int&gt;&amp; nums, int val)</span><br><span class="line">&#123;</span><br><span class="line">int size = nums.size();</span><br><span class="line">for (int i = 0; i &lt; size; i++)</span><br><span class="line">&#123;</span><br><span class="line">if (val == nums[i])//发现需要移除的元素，就将数组集体向前移动一位</span><br><span class="line">&#123;</span><br><span class="line">for (int j = i + 1; j &lt; size; j++)</span><br><span class="line">&#123;</span><br><span class="line">nums[j - 1] = nums[j];</span><br><span class="line">&#125;</span><br><span class="line">i--;//因为下标i以后的数值都向前移动了一位，所以i也向前移动一位</span><br><span class="line">size--;// 此时数组的大小-1</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>时间复杂度：O(n^2)，空间复杂度：O(1)</p><h1 id="4。算法的结果"><a href="#4。算法的结果" class="headerlink" title="4。算法的结果"></a>4。算法的结果</h1><p>因为此算法得到的是数组长度，所以此处需要定义自己的遍历算法来接收数组长度，否则输入有误。<br>遍历代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void removeloop(vector&lt;int&gt;&amp; nums, int val)</span><br><span class="line">&#123;</span><br><span class="line">for (int i = 0; i &lt; val; i++)</span><br><span class="line">&#123;</span><br><span class="line">cout &lt;&lt; nums[i] &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>测试代码如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void removetest()</span><br><span class="line">&#123;</span><br><span class="line">int reason = removeElement_Dual_pointers(nums2, 3);</span><br><span class="line">removeloop(nums2, reason);</span><br><span class="line">cout &lt;&lt; &quot;********&quot; &lt;&lt; endl;</span><br><span class="line">int reason2 = removeElement_Violent_solutions(nums3, 3);</span><br><span class="line">removeloop(nums3, reason2);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>结果如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">2</span><br><span class="line">********</span><br><span class="line">2</span><br><span class="line">2</span><br><span class="line">请按任意键继续. . .</span><br></pre></td></tr></table></figure><br>为了验证没有i—时，算法无法删干净目标元素，特写以下代码进行试验<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; nums4 = &#123;1, 2, 2, 3&#125;;</span><br><span class="line">int badremoveElement_Violent_solutions(vector&lt;int&gt;&amp; nums, int val)</span><br><span class="line">&#123;</span><br><span class="line">int size = nums.size();</span><br><span class="line">for (int i = 0; i &lt; size; i++)</span><br><span class="line">&#123;</span><br><span class="line">if (val == nums[i])</span><br><span class="line">&#123;</span><br><span class="line">for (int j = i + 1; j &lt; size; j++)</span><br><span class="line">&#123;</span><br><span class="line">nums[j - 1] = nums[j];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">size--;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return size;</span><br><span class="line">&#125;</span><br><span class="line">void removetest()</span><br><span class="line">&#123;</span><br><span class="line">int reason = removeElement_Dual_pointers(nums2, 3);</span><br><span class="line">removeloop(nums2, reason);</span><br><span class="line">cout &lt;&lt; &quot;********&quot; &lt;&lt; endl;</span><br><span class="line">int reason2 = removeElement_Violent_solutions(nums3, 3);</span><br><span class="line">removeloop(nums3, reason2);</span><br><span class="line">int reason3 = badremoveElement_Violent_solutions(nums4, 2);</span><br><span class="line">cout &lt;&lt; &quot;没有i--的暴力解法&quot; &lt;&lt; endl;</span><br><span class="line">removeloop(nums4, reason3);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>结果<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">2</span><br><span class="line">********</span><br><span class="line">2</span><br><span class="line">2</span><br><span class="line">没有i--的暴力解法</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">请按任意键继续. . .</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux入门</title>
       <link href="/2024/04/16/Linux/"/>
       <url>/2024/04/16/Linux/</url>
@@ -54,23 +129,23 @@
     
     
     <entry>
-      <title>第三篇文章</title>
-      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%89%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%89%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      <title>第一篇文章</title>
+      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
       
-        <content type="html"><![CDATA[<h2 id="这是我的第三篇文章"><a href="#这是我的第三篇文章" class="headerlink" title="这是我的第三篇文章"></a>这是我的第三篇文章</h2>]]></content>
+        <content type="html"><![CDATA[<h2 id="这是我的第一篇文章"><a href="#这是我的第一篇文章" class="headerlink" title="这是我的第一篇文章"></a>这是我的第一篇文章</h2><div class="note default simple"><p>内容…….</p></div><div class="timeline blue"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>时间轴样式</p></div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-07-24 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases">2.6.6 -&gt; 3.0</a></p></div></div><div class='timeline-item-content'><ol><li>如果有 <code>hexo-lazyload-image</code> 插件，需要删除并重新安装最新版本，设置 <code>lazyload.isSPA: true</code>。</li><li>2.x 版本的 css 和 js 不适用于 3.x 版本，如果使用了 <code>use_cdn: true</code> 则需要删除。</li><li>2.x 版本的 fancybox 标签在 3.x 版本中被重命名为 gallery 。</li><li>2.x 版本的置顶 <code>top: true</code> 改为了 <code>pin: true</code>，并且同样适用于 <code>layout: page</code> 的页面。</li><li>如果使用了 <code>hexo-offline</code> 插件，建议卸载，3.0 版本默认开启了 pjax 服务。</li></ol></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-05-15 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases/tag/2.6.6">2.6.3 -&gt; 2.6.6</a></p></div></div><div class='timeline-item-content'><p>不需要额外处理。</p></div></div></div>]]></content>
       
       
       <categories>
           
-          <category> Python </category>
+          <category> Hexo </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 标签3 </tag>
+            <tag> Hexo </tag>
             
         </tags>
       
@@ -95,7 +170,7 @@
       
         <tags>
             
-            <tag> 标签2 </tag>
+            <tag> c++ </tag>
             
         </tags>
       
@@ -104,73 +179,23 @@
     
     
     <entry>
-      <title>第六篇文章</title>
-      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E5%85%AD%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E5%85%AD%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      <title>第三篇文章</title>
+      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%89%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%89%E7%AF%87%E6%96%87%E7%AB%A0/</url>
       
-        <content type="html"><![CDATA[<h2 id="这是我的第二篇文章"><a href="#这是我的第二篇文章" class="headerlink" title="这是我的第二篇文章"></a>这是我的第二篇文章</h2>]]></content>
+        <content type="html"><![CDATA[<h2 id="这是我的第三篇文章"><a href="#这是我的第三篇文章" class="headerlink" title="这是我的第三篇文章"></a>这是我的第三篇文章</h2>]]></content>
       
       
       <categories>
           
-          <category> c++ </category>
+          <category> Python </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 标签2 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>第四篇文章</title>
-      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E5%9B%9B%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E5%9B%9B%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-      
-        <content type="html"><![CDATA[<h2 id="这是我的第四篇文章"><a href="#这是我的第四篇文章" class="headerlink" title="这是我的第四篇文章"></a>这是我的第四篇文章</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 标签4 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>第一篇文章</title>
-      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-      
-        <content type="html"><![CDATA[<h2 id="这是我的第一篇文章"><a href="#这是我的第一篇文章" class="headerlink" title="这是我的第一篇文章"></a>这是我的第一篇文章</h2><div class="note default simple"><p>内容…….</p></div><div class="timeline blue"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>时间轴样式</p></div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-07-24 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases">2.6.6 -&gt; 3.0</a></p></div></div><div class='timeline-item-content'><ol><li>如果有 <code>hexo-lazyload-image</code> 插件，需要删除并重新安装最新版本，设置 <code>lazyload.isSPA: true</code>。</li><li>2.x 版本的 css 和 js 不适用于 3.x 版本，如果使用了 <code>use_cdn: true</code> 则需要删除。</li><li>2.x 版本的 fancybox 标签在 3.x 版本中被重命名为 gallery 。</li><li>2.x 版本的置顶 <code>top: true</code> 改为了 <code>pin: true</code>，并且同样适用于 <code>layout: page</code> 的页面。</li><li>如果使用了 <code>hexo-offline</code> 插件，建议卸载，3.0 版本默认开启了 pjax 服务。</li></ol></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>2020-05-15 <a href="https://github.com/volantis-x/hexo-theme-volantis/releases/tag/2.6.6">2.6.3 -&gt; 2.6.6</a></p></div></div><div class='timeline-item-content'><p>不需要额外处理。</p></div></div></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> Hexo </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 标签1 </tag>
+            <tag> Python </tag>
             
         </tags>
       
@@ -195,7 +220,57 @@
       
         <tags>
             
-            <tag> 标签2 </tag>
+            <tag> c++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第六篇文章</title>
+      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E5%85%AD%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E5%85%AD%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="这是我的第二篇文章"><a href="#这是我的第二篇文章" class="headerlink" title="这是我的第二篇文章"></a>这是我的第二篇文章</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> c++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第四篇文章</title>
+      <link href="/2024/04/13/2024-4-13-%E7%AC%AC%E5%9B%9B%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/04/13/2024-4-13-%E7%AC%AC%E5%9B%9B%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="这是我的第四篇文章"><a href="#这是我的第四篇文章" class="headerlink" title="这是我的第四篇文章"></a>这是我的第四篇文章</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
             
         </tags>
       
